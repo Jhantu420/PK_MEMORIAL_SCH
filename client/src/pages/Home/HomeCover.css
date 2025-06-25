@@ -1,0 +1,48 @@
+/* HomeCover.css */
+
+.hero-buttons-container {
+  /* This container will help center the buttons */
+  position: relative; /* Keep it relative to the main hero div */
+  z-index: 1; /* Ensure it's above the overlay */
+  display: flex;
+  justify-content: center; /* Center buttons horizontally */
+  gap: 20px; /* Space between buttons */
+  margin-top: 30px; /* Example: push buttons down from text */
+}
+
+.hero-button {
+  width: 20vw; /* Responsive width */
+  max-width: 200px; /* Optional: set a max-width for very large screens */
+  padding: 15px 0;
+  text-align: center;
+  border-radius: 25px;
+  font-weight: bold;
+  border: 2px solid rgb(117, 117, 233);
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  overflow: hidden; /* Crucial for the slide effect */
+  position: relative; /* Crucial for positioning the span */
+  z-index: 1; /* Ensure button content is above the span */
+  transition: color 0.5s ease; /* Smooth transition for text color on hover */
+}
+
+.hero-button span {
+  background:linear-gradient(to right, #248ade, #065fc0);
+  height: 100%;
+  width: 0; /* Start with zero width */
+  border-radius: 23px; /* Slightly less than button to avoid showing outside border */
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: -1; /* Place behind the text */
+  transition: width 0.5s ease; /* Smooth transition for the width */
+}
+
+.hero-button:hover span {
+  width: 100%; /* Expand to full width on hover */
+}
+
+.hero-button:hover {
+  color: #fff8f8; /* Darker text color on hover for contrast with blue background */
+}

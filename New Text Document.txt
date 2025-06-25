@@ -1,0 +1,7 @@
+1. If I use BrowserRouter in App.jsx then when in the context api if we redirect in dashboard after successfull login then means besicaly in redirection there problem comming but if we use it in main.jsx then problem solve
+
+2. Public or Protected route a isAuthentication check korar somoy obbosoi useEffect er vetore korte hobe and dependency array te isAuthentication , navigate pass korate hobe na hole kaj korbe na
+
+3. Another Public and protected route important is for public route return isAuthentication?null:<Outlet /> and for Protected route return isAuthentication?<Outlet />:null important to reduce the effect of flash message
+
+4. if(error instanceof jwt.TokenExpiredError)
