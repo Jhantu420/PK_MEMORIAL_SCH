@@ -25,9 +25,9 @@ function Navbar() {
   };
   return (
     <>
-      <header className="bg-gradient-to-b from-blue-400 to-blue-800 shadow-lg text-white p-4">
+      <header className="bg-gradient-to-b from-[#004792] to-[#005f69] shadow-lg text-white p-4">
         <div className="container mx-auto flex justify-between items-center">
-          <h2 className="md:text-3xl text-xl font-bold flex items-center text-yellow-400 shadow-lg">
+          <h2 className="md:text-3xl text-xl font-bold flex items-center text-yellow-400">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="md:h-12 md:w-12 h-9 w-9 mr-2"

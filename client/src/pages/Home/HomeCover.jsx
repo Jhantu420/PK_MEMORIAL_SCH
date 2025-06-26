@@ -28,7 +28,7 @@ function HomeCover() {
             left: 0,
             width: "100%",
             height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.7)",
+            backgroundColor: "rgba(0, 9, 0, 0.7)",
             zIndex: 0,
           }}
         ></div>
@@ -47,7 +47,7 @@ function HomeCover() {
               color: "Orange",
               textShadow: "1px 1px 2px orange, 0 0 2em blue, 0 0 0.1em blue",
               fontFamily: "sans-serif",
-              fontSize: "6vw",
+              fontSize: "6.5vw",
               fontWeight: "bold",
               marginBottom: "0.2em",
             }}
@@ -58,7 +58,8 @@ function HomeCover() {
             style={{
               color: "white",
               fontFamily: "sans-serif",
-              fontSize: "2.5vw",
+              fontSize: "1.5vw",
+              wordSpacing:"10px",
               fontWeight: "normal",
               lineHeight: "1.5",
               textShadow: "#fc0 1px 0 10px",
