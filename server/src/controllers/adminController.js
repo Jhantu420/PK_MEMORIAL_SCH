@@ -51,12 +51,12 @@ const adminLogin = async (req, res) => {
       return res.status(400).json({ message: "password is not matched" });
     }
     const token = generateToken(adminExist._id);
-    // res.cookie("token",token, {
-    //   httpOnly: true,
-    //   secure: false,
-    //   sameSite: "Strict",
-    //   maxAge: 60 * 24 * 24 * 1000, // 1hour
-    // });
+    res.cookie("token",token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "None",
+      maxAge: 60 * 24 * 24 * 1000, // 1hour
+    });
 
     res.cookie("token",token, {
       httpOnly: true,
@@ -81,7 +81,7 @@ const logout = async (req, res) => {
   try {
     res.clearCookie("token", {
       httpOnly: true,
-      secure: true, // set true in production with HTTPS
+      secure: false, // set true in production with HTTPS
       sameSite: "None",
     });
     return res.status(200).json({ message: "Logout successful" });

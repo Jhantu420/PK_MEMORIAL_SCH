@@ -10,7 +10,7 @@ export const AppContextProvider = ({ children }) => {
   const navigate = useNavigate();
   const [isAuthenticate, setAuthenticate] = useState(false);
 
-  const url = "https://pk-memorial.onrender.com";
+  const url = "http://localhost:3000";
 
   const checkAuth = useCallback(async () => {
     try {
