@@ -1,7 +1,7 @@
 import { generateToken } from "../helper/generateToken.js";
 import { Admin } from "../models/adminRegister.js";
 import bcrypt from "bcryptjs";
-import 'dotenv/config';
+import "dotenv/config";
 const adminRegister = async (req, res) => {
   try {
     const { name, ph, email, password } = req.body;
@@ -51,18 +51,11 @@ const adminLogin = async (req, res) => {
       return res.status(400).json({ message: "password is not matched" });
     }
     const token = generateToken(adminExist._id);
-    res.cookie("token",token, {
+    res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
+      secure: true, // IMPORTANT: Change from false to true
       sameSite: "None",
-      maxAge: 60 * 24 * 24 * 1000, // 1hour
-    });
-
-    res.cookie("token",token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: "None",
-      maxAge: 60 * 24 * 24 * 1000, // 1hour
+      maxAge: 60 * 60 * 1000, // For 1 hour (as per your comment)
     });
 
     return res.status(200).json({ message: "Login Successfull", data: token });
@@ -72,11 +65,11 @@ const adminLogin = async (req, res) => {
   }
 };
 
-const getAdmin =async(req, res)=>{
+const getAdmin = async (req, res) => {
   const id = req.user.id;
-  const response = await Admin.findById({_id:id});
-  return res.json({response})
-}
+  const response = await Admin.findById({ _id: id });
+  return res.json({ response });
+};
 const logout = async (req, res) => {
   try {
     res.clearCookie("token", {
@@ -91,4 +84,4 @@ const logout = async (req, res) => {
   }
 };
 
-export { adminRegister, adminLogin , getAdmin,logout};
+export { adminRegister, adminLogin, getAdmin, logout };
