@@ -4,7 +4,7 @@ import "./HomeCover.css"; // Import the CSS file
 
 function HomeCover() {
   return (
-    <div>
+    <div >
       <div
         style={{
           width: "100%",
@@ -43,10 +43,10 @@ function HomeCover() {
           }}
         >
           <h1
+            className="font-bold font-pacifico"
             style={{
               color: "Orange",
               textShadow: "1px 1px 2px orange, 0 0 2em blue, 0 0 0.1em blue",
-              fontFamily: "sans-serif",
               fontSize: "6.5vw",
               fontWeight: "bold",
               marginBottom: "0.2em",
@@ -55,11 +55,12 @@ function HomeCover() {
             Our Kids Our Pride
           </h1>
           <p
+          className="font-pacifico"
             style={{
               color: "white",
-              fontFamily: "sans-serif",
+            
               fontSize: "1.5vw",
-              wordSpacing:"10px",
+              wordSpacing: "10px",
               fontWeight: "normal",
               lineHeight: "1.5",
               textShadow: "#fc0 1px 0 10px",
@@ -74,11 +75,11 @@ function HomeCover() {
 
         {/* --- Buttons Section --- */}
         <div className="hero-buttons-container">
-          <button className="hero-button" type="button">
+          <button className="hero-button font-pacifico text-orange-400 text-xl" type="button">
             <span></span>
-            Learn More..
+            Learn More....
           </button>
-          <button className="hero-button" type="button">
+          <button className="hero-button font-pacifico text-orange-400 text-xl" type="button">
             <span></span>
             Get in Touch
           </button>

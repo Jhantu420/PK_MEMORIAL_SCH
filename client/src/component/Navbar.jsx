@@ -25,9 +25,9 @@ function Navbar() {
   };
   return (
     <>
-      <header className="bg-gradient-to-b from-[#004792] to-[#005f69] shadow-lg text-white p-4">
+      <header className="bg-[#734af6] shadow-lg text-white p-4 w-[100vw]">
         <div className="container mx-auto flex justify-between items-center">
-          <h2 className="md:text-3xl text-xl font-bold flex items-center text-yellow-400">
+          <h2 className="md:text-3xl text-xl font-bold flex items-center text-yellow-400 font-pacifico">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="md:h-12 md:w-12 h-9 w-9 mr-2"
@@ -53,22 +53,22 @@ function Navbar() {
                   {item.onClick ? (
                     <button
                       onClick={item.onClick}
-                      className="relative block py-2 px-4 text-white group"
+                      className="relative block py-2 px-4 text-white group font-pacifico"
                     >
                       {item.name}
                       <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-yellow-400 group-hover:w-full group-hover:left-0 transition-all duration-300 ease-in-out"></span>
-                      <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out text-indigo-200">
+                      <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out text-orange-400 ">
                         {item.name}
                       </span>
                     </button>
                   ) : (
                     <Link
                       to={item.path}
-                      className="relative block py-2 px-4 text-white group"
+                      className="relative block py-2 px-4 text-white group font-pacifico"
                     >
                       {item.name}
                       <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-yellow-400 group-hover:w-full group-hover:left-0 transition-all duration-300 ease-in-out"></span>
-                      <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out text-indigo-200">
+                      <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out ">
                         {item.name}
                       </span>
                     </Link>

@@ -19,7 +19,6 @@
   font-weight: bold;
   border: 2px solid rgb(117, 117, 233);
   background: transparent;
-  color: white;
   cursor: pointer;
   overflow: hidden; /* Crucial for the slide effect */
   position: relative; /* Crucial for positioning the span */
