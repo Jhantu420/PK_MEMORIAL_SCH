@@ -8,6 +8,8 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Classes from "./pages/Classes";
+import { Footer } from "./component/Footer";
+
 
 function App() {
   return (
@@ -25,6 +27,7 @@ function App() {
           <Route path="/login" element={<Login />} />
         </Route>
       </Routes>
+      <Footer />
     </>
   );
 }
