@@ -4,7 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./auth/protectedRoute";
 import PublicRoute from "./auth/PublicRoute";
 import Navbar from "./component/Navbar";
-import Home from "./pages/Home";
+import Home from "./pages/HomeCover";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Classes from "./pages/Classes";

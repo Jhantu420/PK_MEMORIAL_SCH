@@ -100,8 +100,8 @@ const Classes = () => {
             {/* Main Content Section */}
             <main className="w-full max-w-9xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <section className="text-center mb-12 p-6 bg-[#6A64F1] rounded-xl shadow-sm border border-gray-200">
-                    <h2 className="text-6xl font-extrabold text-yellow-500  mb-4 tracking-tight font-pacifico text-shadow-2xs">Our Academic Classes</h2>
-                    <p className="text-xl text-yellow-300 max-w-3xl mx-auto leading-relaxed">
+                    <h2 className="text-6xl font-extrabold text-yellow-500  mb-4 tracking-tight font-roboto md:font-pacifico text-shadow-2xs">Our Academic Classes</h2>
+                    <p className="text-xl text-yellow-300 max-w-3xl mx-auto leading-relaxed font-roboto md:font-pacifico">
                         A simplified overview of the classes offered, designed to be clear and easy to navigate for all users.
                     </p>
                 </section>
@@ -132,19 +132,19 @@ const Classes = () => {
 
                             {/* Content Area */}
                             <div className="p-5 flex-grow flex flex-col">
-                                <h3 className="text-2xl font-bold text-gray-900 mb-1 leading-tight font-roboto">{classItem.name}</h3>
-                                <p className="text-sm text-gray-600 mb-4">{classItem.code} | {classItem.academicYear}</p>
+                                <h3 className="text-2xl font-bold text-gray-900 mb-1 leading-tight font-roboto md:font-pacifico">{classItem.name}</h3>
+                                <p className="text-sm text-gray-600 mb-4 font-roboto md:font-pacifico">{classItem.code} | {classItem.academicYear}</p>
 
                                 <div className="space-y-2 text-gray-700 text-base mb-6 flex-grow">
-                                    <p><span className="font-semibold text-gray-800 font-roboto">Teacher:</span> {classItem.teacher}</p>
-                                    <p><span className="font-semibold text-gray-800 font-roboto">Schedule:</span> {classItem.schedule}</p>
-                                    <p><span className="font-semibold text-gray-800 font-roboto">Room:</span> {classItem.room}</p>
-                                    <p className="mt-2 text-indigo-700 font-bold text-lg font-roboto"><span className="text-gray-800 text-base font-semibold">Enrollment:</span> {classItem.enrollment}</p>
+                                    <p><span className="font-semibold text-gray-800 font-roboto md:font-pacifico">Teacher:</span> {classItem.teacher}</p>
+                                    <p><span className="font-semibold text-gray-800 font-roboto md:font-pacifico">Schedule:</span> {classItem.schedule}</p>
+                                    <p><span className="font-semibold text-gray-800 font-roboto md:font-pacifico">Room:</span> {classItem.room}</p>
+                                    <p className="mt-2 text-indigo-700 font-bold text-lg font-roboto md:font-pacifico"><span className="text-gray-800 text-base font-semibold">Enrollment:</span> {classItem.enrollment}</p>
                                 </div>
 
                                 {/* Button (similar to Add to Cart) */}
                                 <button className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold
-                                                   hover:bg-indigo-700 transition duration-300 shadow-md cursor-pointer font-roboto">
+                                                   hover:bg-indigo-700 transition duration-300 shadow-md cursor-pointer font-roboto md:font-pacifico">
                                     Contact us....
                                 </button>
                             </div>

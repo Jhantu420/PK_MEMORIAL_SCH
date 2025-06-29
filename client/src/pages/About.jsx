@@ -14,10 +14,10 @@ function About() {
 
         {/* Text Section */}
         <div className="w-full lg:w-1/2 flex flex-col items-center text-center px-4 gap-10">
-          <h1 className="font-pacifico font-bold text-yellow-500 text-5xl sm:text-6xl md:text-9xl drop-shadow-lg">
+          <h1 className="font-roboto md:font-pacifico font-bold text-yellow-500 text-5xl sm:text-6xl md:text-9xl drop-shadow-lg">
             About Us
           </h1>
-          <p className="font-pacifico text-blue-700 text-base sm:text-lg md:text-xl lg:text-2xl drop-shadow-md max-w-2xl leading-relaxed">
+          <p className="font-roboto md:font-pacifico text-blue-700 text-base sm:text-lg md:text-xl lg:text-2xl drop-shadow-md max-w-2xl leading-relaxed">
             PK Memorial is an English medium school located in Dakshin Bhatora,
             in the district of Howrah, West Bengal. Our main aim is to encourage
             and ensure village students grow up in a convenient and advanced
