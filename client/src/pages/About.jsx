@@ -1,12 +1,10 @@
 import React from "react";
 import AboutSch from "../assets/about_sch.png";
-
+import ChartComponent from "../dashboard/Chart";
 
 function About() {
   return (
     <div className="w-screen min-h-screen">
-      
-
       {/* About Section */}
       <div className="w-full relative flex flex-col lg:flex-row items-center px-4 py-8 gap-6 bg-blue-50">
         {/* Background Layer */}
@@ -33,6 +31,9 @@ function About() {
             className="w-full max-w-md md:max-w-lg lg:max-w-xl rounded-xl shadow-2xl"
           />
         </div>
+      </div>
+      <div className="flex items-center justify-center">
+        <ChartComponent />
       </div>
     </div>
   );

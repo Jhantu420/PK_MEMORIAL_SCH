@@ -10,6 +10,8 @@ function Navbar() {
     { name: "About", path: "/about" },
     { name: "Classes", path: "/classes" },
     { name: "Contact", path: "/contact" },
+    { name: "Admin Dashboard", path: "/admin-dashboard" },
+
     isAuthenticate
       ? {
           name: "Logout",
