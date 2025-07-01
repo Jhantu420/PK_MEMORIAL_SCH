@@ -10,7 +10,7 @@ function Navbar() {
     { name: "About", path: "/about" },
     { name: "Classes", path: "/classes" },
     { name: "Contact", path: "/contact" },
-    { name: "Admin Dashboard", path: "/admin-dashboard" },
+    // { name: "Admin Dashboard", path: "/admin-dashboard" },
 
     isAuthenticate
       ? {
@@ -29,7 +29,9 @@ function Navbar() {
     <>
       <header className="bg-[#734af6] shadow-lg text-white p-4 w-[100vw]">
         <div className="container mx-auto flex justify-between items-center">
-          <h2 className="md:text-3xl text-xl font-bold flex items-center text-yellow-400 font-pacifico">
+          <h2
+            className="md:text-3xl text-xl font-bold flex items-center text-yellow-400 font-pacifico ml-19"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="md:h-12 md:w-12 h-9 w-9 mr-2"

@@ -1,17 +1,21 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/appContext";
-import { useEffect } from "react"; 
+import { useEffect } from "react";
+import Spinner from 'react-bootstrap/Spinner';
 
 const ProtectedRoute = () => {
-  const { isAuthenticate} = useAuth(); 
+  const { isAuthenticate, loading } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if ( !isAuthenticate) {
-      navigate("/", { replace: true });
+    if (!loading && !isAuthenticate) {
+      navigate("/login", { replace: true });
     }
-  }, [isAuthenticate, navigate]);
- 
+  }, [isAuthenticate, navigate, loading]);
+
+  if (loading)
+    return <Spinner animation="grow" />;
+
   return isAuthenticate ? <Outlet /> : null;
 };
 export default ProtectedRoute;

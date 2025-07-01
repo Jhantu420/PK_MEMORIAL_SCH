@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 const secret = process.env.JWT_SECRET;
 const options = {
-  expiresIn: "5m",
+  expiresIn: "30 days",
 };
 
 const generateToken = (id) => {

@@ -53,8 +53,8 @@ const adminLogin = async (req, res) => {
     const token = generateToken(adminExist._id);
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true, // IMPORTANT: Change from false to true
-      sameSite: "None",
+      secure: false, // IMPORTANT: Change from false to true
+      sameSite: "Strict",
       maxAge: 60 * 60 * 1000, // For 1 hour (as per your comment)
     });
 
@@ -66,16 +66,25 @@ const adminLogin = async (req, res) => {
 };
 
 const getAdmin = async (req, res) => {
-  const id = req.user.id;
-  const response = await Admin.findById({ _id: id });
-  return res.json({ response });
+    try {
+        const id = req.user.id;
+        const response = await Admin.findById({ _id: id }).select("-password"); // Good practice to exclude password
+        if (!response) {
+            return res.status(404).json({ success: false, message: "Admin not found." });
+        }
+        return res.status(200).json({ success: true, message: "Admin data fetched successfully.", data: response });
+    } catch (error) {
+        console.error("Error in getAdmin:", error);
+        return res.status(500).json({ success: false, message: "Internal server error fetching admin data." });
+    }
 };
+
 const logout = async (req, res) => {
   try {
     res.clearCookie("token", {
       httpOnly: true,
       secure: false, // set true in production with HTTPS
-      sameSite: "None",
+      sameSite: "Strict",
     });
     return res.status(200).json({ message: "Logout successful" });
   } catch (error) {
