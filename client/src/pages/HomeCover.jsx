@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 function HomeCover() {
   const navigate = useNavigate();
   const handleClick = () => {
-
     navigate("/about");
   };
   return (
@@ -37,7 +36,10 @@ function HomeCover() {
           Learn More...
         </button>
 
-        <button className="group relative w-[70vw] max-w-xs sm:w-48 py-3 rounded-full border-2 border-[#6A64F1] text-orange-400 text-lg font-roboto md:font-pacifico overflow-hidden transition-colors duration-500 hover:text-white cursor-pointer">
+        <button
+          onClick={() => navigate("/contact")}
+          className="group relative w-[70vw] max-w-xs sm:w-48 py-3 rounded-full border-2 border-[#6A64F1] text-orange-400 text-lg font-roboto md:font-pacifico overflow-hidden transition-colors duration-500 hover:text-white cursor-pointer"
+        >
           <span className="absolute left-0 bottom-0 h-full w-0 rounded-full bg-gradient-to-r from-[#6A64F1] to-[#1f1a77]transition-all duration-500 group-hover:w-full z-[-1]" />
           Get in Touch
         </button>

@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/appContext";
-
+import { GiHamburgerMenu } from "react-icons/gi";
+import { useLocation } from "react-router-dom";
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isAuthenticate, logout } = useAuth();
+  const location = useLocation();
+  const { isAuthenticate, logout, isSidebarOpen, toggleSidebar, user } =
+    useAuth();
   const navLink = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
     { name: "Classes", path: "/classes" },
     { name: "Contact", path: "/contact" },
-    // { name: "Admin Dashboard", path: "/admin-dashboard" },
-
     isAuthenticate
       ? {
           name: "Logout",
@@ -25,29 +26,47 @@ function Navbar() {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+  const showSidebarToggle =
+    user?.data?.role === "admin" && location.pathname.startsWith("/dashboard");
   return (
     <>
       <header className="bg-[#734af6] shadow-lg text-white p-4 w-[100vw]">
         <div className="container mx-auto flex justify-between items-center">
-          <h2
-            className="md:text-3xl text-xl font-bold flex items-center text-yellow-400 font-pacifico ml-19"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="md:h-12 md:w-12 h-9 w-9 mr-2"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332-.477-4.5-1.253"
+          <div className="flex items-center space-x-4">
+            {/* Sidebar toggle (admin + dashboard pages only) */}
+            {showSidebarToggle && (
+              <GiHamburgerMenu
+                style={{
+                  fontSize: "25px",
+                  color: "white",
+                  cursor: isSidebarOpen ? "default" : "pointer",
+                  visibility: isSidebarOpen ? "hidden" : "visible",
+                }}
+                onClick={!isSidebarOpen ? toggleSidebar : undefined}
               />
-            </svg>
-            PK MEMORIAL
-          </h2>
+            )}
+
+            {/* Logo */}
+            <h2 className="md:text-3xl text-xl font-bold flex items-center text-yellow-400 font-pacifico ml-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="md:h-12 md:w-12 h-9 w-9 mr-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332-.477-4.5-1.253"
+                />
+              </svg>
+              PK MEMORIAL
+            </h2>
+          </div>
+
+          {/* Desktop Menu */}
           <div className="hidden md:block">
             <ul className="flex space-x-8 text-lg font-medium">
               {" "}
@@ -81,8 +100,9 @@ function Navbar() {
               ))}
             </ul>
           </div>
+
+          {/* Mobile Menu Toggle */}
           <div className="md:hidden">
-            {/* You'd typically add state here to toggle a mobile menu */}
             <button
               className="text-white focus:outline-none"
               onClick={toggleMenu}
@@ -122,6 +142,7 @@ function Navbar() {
           </div>
         </div>
       </header>
+
       {/* Mobile Menu Overlay */}
       {isMenuOpen && ( // Conditionally render if isMenuOpen is true
         <div className="md:hidden bg-gradient-to-br from-blue-600 to-purple-700 p-6 fixed inset-0 z-50 flex flex-col items-center justify-center animate-fade-in">

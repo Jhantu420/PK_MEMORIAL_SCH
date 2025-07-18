@@ -6,9 +6,7 @@ function About() {
   return (
     <div className="w-screen min-h-screen">
       {/* About Section */}
-      <div className="w-full relative flex flex-col lg:flex-row items-center px-4 py-8 gap-6 bg-blue-50">
-        {/* Background Layer */}
-        <span className="absolute top-0 left-0 w-full h-full bg-blue-50 z-[-1]" />
+      <div className="w-full relative flex flex-col lg:flex-row items-center px-4 py-8 gap-6">
 
         {/* Text Section */}
         <div className="w-full lg:w-1/2 flex flex-col items-center text-center px-4 gap-10">

@@ -50,7 +50,7 @@ const adminLogin = async (req, res) => {
     if (!result) {
       return res.status(400).json({ message: "password is not matched" });
     }
-    const token = generateToken(adminExist._id);
+    const token = generateToken(adminExist._id,adminExist.role);
     res.cookie("token", token, {
       httpOnly: true,
       secure: false, // IMPORTANT: Change from false to true

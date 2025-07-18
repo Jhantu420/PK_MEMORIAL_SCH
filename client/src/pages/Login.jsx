@@ -11,7 +11,6 @@ function Login() {
     ph: "",
     password: "",
   });
-console.log("checking is isAuthenticate or not",isAuthenticate)
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior

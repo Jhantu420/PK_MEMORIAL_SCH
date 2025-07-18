@@ -5,9 +5,10 @@ const options = {
   expiresIn: "30 days",
 };
 
-const generateToken = (id) => {
+const generateToken = (id,role) => {
   const payload = {
     id: id,
+    role:role
   };
   const token = jwt.sign(payload,secret,options);
   return token;

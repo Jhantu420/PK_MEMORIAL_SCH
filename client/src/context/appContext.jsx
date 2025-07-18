@@ -6,34 +6,46 @@ import { toast } from "react-toastify";
 export const AppContext = createContext();
 
 export const AppContextProvider = ({ children }) => {
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const [isAuthenticate, setAuthenticate] = useState(false);
-  const [loading, setLoading] = useState(true); // ✅ CORRECT
-
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const url = "http://localhost:3000"; //"https://pk-memorial-server.onrender.com"
 
   const checkAuth = useCallback(async () => {
-    setLoading(true);
     try {
       const result = await axios.get(`${url}/api/v1/getAdmin`, {
         withCredentials: true,
       });
-      console.log("Auth result", result.data); // Add this
+      // console.log("Auth result", result.data.data.role); // Add this
       setUser(result.data);
       setAuthenticate(true);
     } catch (error) {
       console.log("error form check auth catch block", error);
       setAuthenticate(false);
-    } finally {
-      setLoading(false);
     }
   }, [url]);
 
   useEffect(() => {
     checkAuth();
   }, []);
+  const toggleSidebar = useCallback(() => {
+    setIsSidebarOpen((prev) => !prev);
+  }, []);
+  const closeSidebar = () => {
+    setIsSidebarOpen(false);
+  };
+  useEffect(() => {
+    if (isSidebarOpen) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+
+    // Cleanup on unmount
+    return () => document.body.classList.remove("overflow-hidden");
+  }, [isSidebarOpen]);
 
   // Logout function
   const logout = async () => {
@@ -59,9 +71,11 @@ export const AppContextProvider = ({ children }) => {
         isAuthenticate,
         setAuthenticate,
         logout,
-        loading,
         user,
         checkAuth,
+        isSidebarOpen,
+        toggleSidebar,
+        closeSidebar,
       }}
     >
       {children}

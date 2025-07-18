@@ -8,8 +8,10 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Classes from "./pages/Classes";
 import { Footer } from "./component/Footer";
-import AdminDashboard from "./dashboard/AdminDashboard";
 import RegisterStudent from "./dashboard/RegisterStudent";
+import RegisterTeacher from "./dashboard/RegisterTeacher";
+import DashboardLayout from "./dashboard/DashboardLayout"; 
+
 
 function App() {
   return (
@@ -22,8 +24,11 @@ function App() {
         <Route path="/contact" element={<Contact />} />
 
         <Route element={<ProtectedRoute />}>
-          <Route path="/dashboard" element={<AdminDashboard />} />
+          <Route path="/dashboard" element={<DashboardLayout />}>
+    
             <Route path="register-student" element={<RegisterStudent />} />
+            <Route path="register-teachers" element={<RegisterTeacher />} />
+          </Route>
         </Route>
 
         <Route element={<PublicRoute />}>
@@ -35,4 +40,4 @@ function App() {
   );
 }
 
-export default App;
+export default App
