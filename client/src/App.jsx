@@ -3,7 +3,8 @@ import Login from "./pages/Login";
 import ProtectedRoute from "./auth/protectedRoute";
 import PublicRoute from "./auth/PublicRoute";
 import Navbar from "./component/Navbar";
-import Home from "./pages/HomeCover";
+// import Home from "./pages/HomeCover";
+import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Classes from "./pages/Classes";
@@ -18,6 +19,7 @@ function App() {
     <>
       <Navbar />
       <Routes>
+        {/* <Route path="/" element={<Home />} /> */}
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/classes" element={<Classes />} />

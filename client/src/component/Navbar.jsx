@@ -13,16 +13,20 @@ function Navbar() {
     { name: "About", path: "/about" },
     { name: "Classes", path: "/classes" },
     { name: "Contact", path: "/contact" },
+    ...(isAuthenticate && user?.data?.role === "admin"
+      ? [{ name: "Dashboard", path: "/dashboard" }]
+      : []),
     isAuthenticate
       ? {
           name: "Logout",
           path: "#",
           onClick: () => {
-            logout(); // Your logout function from context
+            logout(); // Your logout function
           },
         }
       : { name: "Login", path: "/login" },
   ];
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };

@@ -5,7 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 function Login() {
   const navigate = useNavigate();
-  const { url,isAuthenticate, setAuthenticate } = useAuth();
+  const { url,setAuthenticate, checkAuth } = useAuth();
   // State for phone number and password input fields
   const [data, setData] = useState({
     ph: "",
@@ -19,7 +19,7 @@ function Login() {
       const response = await axios.post(`${url}/api/v1/loginAdmin`, data, {
         withCredentials: true,
       });
-      // console.log("After comming response", response);
+      // console.log("After comming response", response.data);
       if (response.data.message === "Login Successfull") {
         toast.success("Login successfull.............");
         setData({
@@ -27,6 +27,7 @@ function Login() {
           password: "",
         });
         setAuthenticate(true);
+        await checkAuth()
         navigate("/dashboard");
       }
     } catch (error) {
