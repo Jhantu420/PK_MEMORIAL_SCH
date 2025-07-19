@@ -1,151 +1,104 @@
-import React from "react";
+import React, { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 
-// Main App component
+// Register ScrollTrigger
+gsap.registerPlugin(ScrollTrigger);
+
 const Classes = () => {
-  // This data would typically come from an API call or a database
+  const headerRef = useRef(null);
+  const cardRefs = useRef([]);
+
   const classesData = [
-    {
-      name: "Nursery",
-      status: "Enrollment Open",
-      subject: "Bengali, English, Math",
-    },
-    {
-      name: "LKG ",
-      subject: "Bengali, English, Math",
-      status:  "Enrollment Open",
-    },
-    {
-      name: "UKG ",
-      status: "Enrollment Open",
-      subject: "Bengali, English, Math",
-    },
-    {
-      id: "G1-A",
-      name: "Grade 1 - Section A",
-      code: "G1-A",
-      academicYear: "2024-2025",
-      teacher: "Mr. Robert Brown",
-      schedule: "Mon-Fri (8:30 AM - 3:00 PM)",
-      room: "Primary Block 101",
-      enrollment: "28/30 Students",
-      status: "Enrollment Open",
-      subject: "Bengali, English, Math",
-    },
-    {
-      id: "G2-A",
-      name: "Grade 2 - Section A",
-      code: "G2-A",
-      academicYear: "2024-2025",
-      teacher: "Mr. Robert Brown",
-      schedule: "Mon-Fri (8:30 AM - 3:00 PM)",
-      room: "Primary Block 101",
-      enrollment: "28/30 Students",
-      status: "Enrollment Open",
-      subject: "Bengali, English, Math",
-    },
-    {
-      id: "G3-A",
-      name: "Grade 3 - Section A",
-      code: "G3-A",
-      academicYear: "2024-2025",
-      teacher: "Mr. Robert Brown",
-      schedule: "Mon-Fri (8:30 AM - 3:00 PM)",
-      room: "Primary Block 101",
-      enrollment: "28/30 Students",
-      status: "Enrollment Open",
-      subject: "Bengali, English, Math",
-    },
-    {
-      id: "G4-A",
-      name: "Grade 4 - Section A",
-      code: "G4-A",
-      academicYear: "2024-2025",
-      teacher: "Mr. Robert Brown",
-      schedule: "Mon-Fri (8:30 AM - 3:00 PM)",
-      room: "Primary Block 101",
-      enrollment: "28/30 Students",
-      status: "Enrollment Open",
-      subject: "Bengali, English, Math",
-    },
-    {
-      id: "G5-A",
-      name: "Grade 5 - Section A",
-      code: "G5-A",
-      academicYear: "2024-2025",
-      teacher: "Mr. Robert Brown",
-      schedule: "Mon-Fri (8:30 AM - 3:00 PM)",
-      room: "Primary Block 101",
-      enrollment: "28/30 Students",
-      status: "Enrollment Open",
-      subject: "Bengali, English, Math",
-    },
-    // Add more class data here as needed
+    { name: "Nursery", status: "Enrollment Open", subject: "Bengali, English, Math" },
+    { name: "LKG", status: "Enrollment Open", subject: "Bengali, English, Math" },
+    { name: "UKG", status: "Enrollment Open", subject: "Bengali, English, Math" },
+    { id: "G1-A", name: "Grade 1 - Section A", status: "Enrollment Open", subject: "Bengali, English, Math" },
+    { id: "G2-A", name: "Grade 2 - Section A", status: "Enrollment Open", subject: "Bengali, English, Math" },
+    { id: "G3-A", name: "Grade 3 - Section A", status: "Enrollment Open", subject: "Bengali, English, Math" },
+    { id: "G4-A", name: "Grade 4 - Section A", status: "Enrollment Open", subject: "Bengali, English, Math" },
+    { id: "G5-A", name: "Grade 5 - Section A", status: "Enrollment Open", subject: "Bengali, English, Math" },
   ];
 
+  useGSAP(() => {
+    // Animate header
+    gsap.from(headerRef.current, {
+      y: 50,
+      opacity: 0,
+      duration: 1,
+      ease: "power2.out",
+    });
+
+    // Animate each card individually on scroll
+    cardRefs.current.forEach((card, index) => {
+      if (card) {
+        gsap.from(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: "top 85%",
+            toggleActions: "play none none none", // animation plays once llwhen in view
+          },
+          y: 60,
+          opacity: 0,
+          duration: 0.8,
+          delay:0.5,
+          ease: "power3.out",
+        });
+      }
+    });
+  }, []);
+
   return (
-    <div className="font-['Inter'] bg-gray-50 min-h-screen flex flex-col items-center p-4">
-      {/* Main Content Section */}
+    <div className="bg-gray-50 min-h-screen flex flex-col items-center p-4">
       <main className="w-full max-w-9xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <section className="text-center mb-12 p-6 bg-[#6A64F1] rounded-xl shadow-sm border border-gray-200">
-          <h2 className="text-6xl font-extrabold text-yellow-500  mb-4 tracking-tight font-roboto md:font-pacifico text-shadow-2xs">
+        {/* Header */}
+        <section
+          ref={headerRef}
+          className="text-center mb-12 p-6 bg-[#6A64F1] rounded-xl shadow-sm border border-gray-200"
+        >
+          <h2 className="text-6xl font-extrabold text-yellow-500 mb-4">
             Our Academic Classes
           </h2>
-          <p className="text-xl text-yellow-300 max-w-3xl mx-auto leading-relaxed font-roboto md:font-pacifico">
-            A simplified overview of the classes offered, designed to be clear
-            and easy to navigate for all users.
+          <p className="text-xl text-yellow-300 max-w-3xl mx-auto leading-relaxed">
+            A simplified overview of the classes offered, designed to be clear and easy to navigate for all users.
           </p>
         </section>
 
-        {/* Classes Grid */}
-        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-6 md:gap-8">
-          {classesData.map((classItem) => (
+        {/* Cards Grid */}
+        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {classesData.map((classItem, index) => (
             <div
-              key={classItem.id}
-              className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden
-                                       transform hover:scale-[1.02] transition duration-300 ease-in-out
-                                       flex flex-col"
+              key={classItem.id || classItem.name}
+              ref={(el) => (cardRefs.current[index] = el)}
+              className="bg-white rounded-xl shadow-lg border border-gray-100 transform hover:scale-[1.02] transition duration-300 ease-in-out flex flex-col"
             >
-              {/* Image Placeholder Area (similar to the 400x300 box) */}
               <div className="relative w-full h-48 bg-gray-200 flex items-center justify-center text-gray-500 font-bold text-xl">
-                Class Visual (e.g., Icon/Image)
-                {/* "Sale" like tag - dynamic status */}
+                Class Visual
                 {classItem.status && (
                   <span
-                    className={`absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-semibold
-                                        ${
-                                          classItem.status === "Class Full"
-                                            ? "bg-red-500 text-white"
-                                            : classItem.status ===
-                                              "Few Seats Left"
-                                            ? "bg-orange-500 text-white"
-                                            : "bg-green-500 text-white"
-                                        }`}
+                    className={`absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-semibold ${
+                      classItem.status === "Class Full"
+                        ? "bg-red-500"
+                        : classItem.status === "Few Seats Left"
+                        ? "bg-orange-500"
+                        : "bg-green-500"
+                    } text-white`}
                   >
                     {classItem.status}
                   </span>
                 )}
               </div>
-
-              {/* Content Area */}
               <div className="p-5 flex-grow flex flex-col">
-                <h3 className="text-2xl font-bold text-gray-900 mb-1 leading-tight font-roboto md:font-pacifico">
+                <h3 className="text-2xl font-bold text-gray-900 mb-1">
                   {classItem.name}
                 </h3>
-
-                <div className="space-y-2 text-gray-700 text-base mb-6 flex-grow">
-                  <p className="mt-2 text-indigo-700 font-bold text-lg font-roboto md:font-pacifico">
-                    <span className="text-gray-800 text-base font-semibold">
-                      Subject:
-                    </span>{" "}
-                    {classItem.subject}
+                <div className="text-gray-700 text-base mb-6 flex-grow">
+                  <p className="text-indigo-700 font-bold text-lg">
+                    <span className="text-gray-800 font-semibold">Subject:</span> {classItem.subject}
                   </p>
                 </div>
-
-                {/* Button (similar to Add to Cart) */}
-                <button
-                  className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold
-                                                   hover:bg-indigo-700 transition duration-300 shadow-md cursor-pointer font-roboto md:font-pacifico"
-                >
+                <button className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300 shadow-md cursor-pointer">
                   Apply now....
                 </button>
               </div>
