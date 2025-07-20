@@ -53,8 +53,8 @@ const adminLogin = async (req, res) => {
     const token = generateToken(adminExist._id,adminExist.role);
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false, // IMPORTANT: Change from false to true
-      sameSite: "Strict",
+      secure: true, // IMPORTANT: Change from false to true
+      sameSite: "None",
       maxAge: 60 * 60 * 1000, // For 1 hour (as per your comment)
     });
 
@@ -83,8 +83,8 @@ const logout = async (req, res) => {
   try {
     res.clearCookie("token", {
       httpOnly: true,
-      secure: false, // set true in production with HTTPS
-      sameSite: "Strict",
+      secure: true, // set true in production with HTTPS
+      sameSite: "None",
     });
     return res.status(200).json({ message: "Logout successful" });
   } catch (error) {
