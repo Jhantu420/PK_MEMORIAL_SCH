@@ -8,8 +8,8 @@ function Login() {
   const { url,setAuthenticate, checkAuth } = useAuth();
   // State for phone number and password input fields
   const [data, setData] = useState({
-    ph: "",
-    password: "",
+    ph: "9681693120",
+    password: "password",
   });
   // Function to handle form submission
   const handleSubmit = async (e) => {

@@ -11,7 +11,7 @@ export const AppContextProvider = ({ children }) => {
   const [isAuthenticate, setAuthenticate] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const url =  "https://pk-memorial-server.onrender.com" //"http://localhost:3000";
+  const url = "http://localhost:3000"; //"https://pk-memorial-server.onrender.com"
 
   const checkAuth = useCallback(async () => {
     try {

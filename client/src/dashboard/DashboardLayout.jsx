@@ -2,6 +2,7 @@ import { Sidebar } from "../component/Sidebar";
 import { Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../context/appContext";
 import { useEffect, useRef } from "react";
+import StudentDashboard from "./StudentDashboard";
 
 export default function DashboardLayout() {
   const sidebarRef = useRef(null);
@@ -10,7 +11,11 @@ export default function DashboardLayout() {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (isSidebarOpen && sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+      if (
+        isSidebarOpen &&
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target)
+      ) {
         closeSidebar();
       }
     };

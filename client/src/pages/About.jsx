@@ -140,7 +140,7 @@ function About() {
                   </p>
                 </div>
               </div>
-              <div className="mt-3 text-sm md:text-xl text-gray-700 dark:text-gray-200 font-roboto">
+              <div className="mt-3 text-sm md:text-xl text-white font-roboto">
                 <p>
                   <strong>Email:</strong> {teacher.email}
                 </p>
