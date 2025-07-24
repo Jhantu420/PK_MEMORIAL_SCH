@@ -7,9 +7,8 @@ function CreateClass() {
   const registerRef = useRef();
   useEffect(() => {
     gsap.from(registerRef.current, {
-      y: -30,
-      opacity: 0,
-      duration: 0.8,
+      x: 300,
+      duration: 1.8,
       ease: "power2.out",
     });
   }, []);
