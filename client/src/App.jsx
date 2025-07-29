@@ -15,7 +15,7 @@ import DashboardLayout from "./dashboard/DashboardLayout";
 import CreateClass from "./dashboard/CreateClass";
 import ClassDashboard from "./dashboard/ClassDashboard";
 import TeacherDashboard from "./dashboard/TeacherDashboard";
-import OurKnowledge from "./pages/OurKnowledge";
+// import OurKnowledge from "./pages/OurKnowledge";
 import OurKnowledge2 from "./pages/ourKnowledge2";
 import OurKnowledge3 from "./pages/ourKnowledge3";
 import StudentDashboard from "./dashboard/StudentDashboard";
@@ -30,7 +30,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/classes" element={<Classes />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/our-knowledge" element={<OurKnowledge />} />
+        {/* <Route path="/our-knowledge" element={<OurKnowledge />} /> */}
         <Route path="/our-knowledge2" element={<OurKnowledge2 />} />
         <Route path="/our-knowledge3" element={<OurKnowledge3 />} />
 

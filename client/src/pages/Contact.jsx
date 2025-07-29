@@ -3,12 +3,12 @@ import EarthScene from "../canvas/EarthScene";
 
 function Contact() {
   return (
-    <div className="min-h-screen relative">
+    <div className=" relative">
       {/* Grid Layout for Earth and Form */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-10 px-4 sm:px-6 lg:px-10 py-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-10   ">
         
         {/* Earth Scene */}
-        <div className="relative w-full h-[60vh] sm:h-[70vh] md:h-[90vh] lg:h-[100vh] bg-black rounded-2xl overflow-hidden">
+        <div className="relative  sm:h-[400px] lg:h-full bg-black overflow-hidden">
           <EarthScene />
         </div>
 

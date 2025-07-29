@@ -4,7 +4,7 @@ import ChartComponent from "../dashboard/Chart";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
-const teachers = [
+const teacher = [
   {
     name: "Mr. Arjun Singh",
     subject: "Mathematics",
@@ -58,6 +58,7 @@ function About() {
   const h1Ref = useRef();
   const pRef = useRef();
   const imgRef = useRef();
+  const cardRefs = useRef([]);
 
   useGSAP(() => {
     gsap.from(h1Ref.current, {
@@ -76,7 +77,6 @@ function About() {
       x: -1000,
       opacity: 0,
       duration: 3,
-      // delay:1,
       ease: "power2.out",
     });
   });
@@ -119,36 +119,53 @@ function About() {
       <div className="flex items-center justify-center">
         <ChartComponent />
       </div>
-      <div className="p-14 flex flex-col gap-16" ref={imgRef}>
-        <h1 className="font-roboto md:font-pacifico font-bold text-yellow-500 text-5xl sm:text-6xl md:text-7xl drop-shadow-lg text-center">Our Teachers</h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-15">
-          {teachers.map((teacher, index) => (
+      <div className="p-14 flex flex-col gap-16">
+        <h1 className="font-roboto md:font-pacifico font-bold text-yellow-500 text-5xl sm:text-6xl md:text-7xl drop-shadow-lg text-center">
+          Our Teachers
+        </h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          {teacher.map((t, index) => (
             <div
               key={index}
-              className=" bg-[#734af6] border-2 border-[#734af6] rounded-xl shadow-md p-4 transition hover:shadow-xl"
+              ref={(el) => (cardRefs.current[index] = el)}
+              onMouseEnter={() =>
+                gsap.to(cardRefs.current[index], {
+                  scale: 1.05,
+                  boxShadow: "0px 10px 20px rgba(0,0,0,0.3)",
+                  duration: 1.3,
+                  ease: "power2.out",
+                })
+              }
+              onMouseLeave={() =>
+                gsap.to(cardRefs.current[index], {
+                  scale: 0.7,
+                  boxShadow: "0px 4px 6px rgba(0,0,0,0.1)",
+                  duration: 1.3,
+                  ease: "power2.out",
+                })
+              }
+              className="bg-[#734af6] border-2 border-[#734af6] rounded-xl shadow-md p-4 transition-all cursor-pointer"
             >
               <div className="flex items-center gap-4">
                 <img
-                  src={teacher.photoUrl}
-                  alt={teacher.name}
-                  className="w-16 h-16 md:w-24 md:h-24 rounded-full object-cover border "
+                  src={t.photoUrl}
+                  alt={t.name}
+                  className="w-16 h-16 md:w-24 md:h-24 rounded-full object-cover border"
                 />
                 <div>
-                  <h2 className="text-lg font-semibold text-[#734af6]">{teacher.name}</h2>
-                  <p className="text-sm text-gray-500 dark:text-gray-300">
-                    {teacher.subject}
-                  </p>
+                  <h2 className="text-lg font-semibold text-white">{t.name}</h2>
+                  <p className="text-sm text-gray-300">{t.subject}</p>
                 </div>
               </div>
               <div className="mt-3 text-sm md:text-xl text-white font-roboto">
                 <p>
-                  <strong>Email:</strong> {teacher.email}
+                  <strong>Email:</strong> {t.email}
                 </p>
                 <p>
-                  <strong>Phone:</strong> {teacher.phone}
+                  <strong>Phone:</strong> {t.phone}
                 </p>
                 <p>
-                  <strong>Experience:</strong> {teacher.experience} years
+                  <strong>Experience:</strong> {t.experience} years
                 </p>
               </div>
             </div>
