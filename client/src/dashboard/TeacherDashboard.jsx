@@ -141,6 +141,8 @@ function TeacherDashboard() {
                 <th className="text-left py-3 px-4">Phone</th>
                 <th className="text-left py-3 px-4">Address</th>
                 <th className="text-left py-3 px-4">Qualification</th>
+                <th className="text-left py-3 px-4">Subject Expertise</th>
+                <th className="text-left py-3 px-4">Experience</th>
                 <th className="text-left py-3 px-4">Image</th>
                 <th className="text-center py-3 px-4">Actions</th>
               </tr>
@@ -153,6 +155,8 @@ function TeacherDashboard() {
                   <td className="py-2 px-4">{teacher.phone}</td>
                   <td className="py-2 px-4">{teacher.address}</td>
                   <td className="py-2 px-4">{teacher.qualification}</td>
+                  <td className="py-2 px-4">{teacher.subject}</td>
+                  <td className="py-2 px-4">{teacher.experience}</td>
                   <td className="py-2 px-4">
                     <img
                       src={teacher.imageUrl}

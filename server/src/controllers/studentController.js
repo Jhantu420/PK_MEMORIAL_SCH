@@ -26,9 +26,15 @@ export const registerStudent = async (req, res) => {
         .status(404)
         .json({ success: false, message: "Invalid class ID" });
     }
-    const existingStudent = await Student.findOne({
-      $or: [{ email }, { phone }],
-    });
+    const existingStudent = await Student.findOne({ rollNo, class: classId });
+    if (existingStudent) {
+      return res
+        .status(409)
+        .json({
+          success: false,
+          message: "Student already exists with this roll number in the class",
+        });
+    }
 
     let imageUrl = null;
 

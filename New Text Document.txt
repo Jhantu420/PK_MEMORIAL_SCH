@@ -5,3 +5,13 @@
 3. Another Public and protected route important is for public route return isAuthentication?null:<Outlet /> and for Protected route return isAuthentication?<Outlet />:null important to reduce the effect of flash message
 
 4. if(error instanceof jwt.TokenExpiredError)
+
+
+1. in one class can't have 2 roll no
+2. in student update section insted of id , all class is showing as a dropdown
+
+3. Teacher update section need to be completed
+4. Contact page backend and that should be showing in dashboard bell icon
+5. Class page apply now with bell icon in dashboard
+6. About page chert and teacher's details
+7. Home page vice principle message

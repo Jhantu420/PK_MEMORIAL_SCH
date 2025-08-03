@@ -4,7 +4,7 @@ const studentSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     address: { type: String, required: true },
-    rollNo: { type: String, required: true, unique: true },
+    rollNo: { type: String, required: true},
     class: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "class",

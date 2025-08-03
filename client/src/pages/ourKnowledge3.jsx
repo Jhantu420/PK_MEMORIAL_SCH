@@ -340,14 +340,14 @@ const OurKnowledge3 = () => {
           }}
         ></div>
         <div className="relative z-10 text-center max-w-5xl mx-auto">
-          <h1 className="text-6xl md:text-8xl font-extrabold mb-6 leading-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+          <h1 className="text-6xl md:text-8xl font-extrabold mb-6 leading-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-white">
             Future-Proof Your Business.
           </h1>
           <p className="text-xl md:text-2xl mb-10 opacity-80 max-w-3xl mx-auto">
             Empowering innovation and accelerating growth with bespoke digital
             solutions.
           </p>
-          <button className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-10 py-5 rounded-full shadow-xl hover:shadow-2xl transition duration-300 transform hover:scale-105 font-bold text-lg flex items-center justify-center mx-auto">
+          <button className="bg-gradient-to-r from-white to-white text-black px-10 py-5 rounded-full shadow-xl hover:shadow-2xl transition duration-300 transform hover:scale-105 font-bold text-lg flex items-center justify-center mx-auto">
             Explore Our Vision <ChevronRight className="ml-2" size={20} />
           </button>
         </div>

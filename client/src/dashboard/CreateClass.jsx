@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../context/appContext";
+import { toast } from "react-toastify";
 import gsap from "gsap";
 
 function CreateClass() {
@@ -35,7 +36,7 @@ function CreateClass() {
         },
       });
       if (result.data.success) {
-        toast.success("Class updated successfully!");
+        toast.success("Class Created successfully!");
         setData({
           className: "",
           subjects: "",

@@ -8,31 +8,54 @@ import "reactjs-popup/dist/index.css";
 
 function StudentDashboard() {
   const [studentList, setStudentList] = useState([]);
+  const [classList, setClassList] = useState([]);
+  const [selectedStudentId, setSelectedStudentId] = useState(null);
   const [originalData, setOriginalData] = useState(null);
-
+  const [searchItem, setSearchItem] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    class: "",
+    classId: "",
     image: null,
+    address: "",
+    rollNo: "",
+    marks: "",
+    parentName: "",
+    parentPh: "",
   });
-  const [selectedStudentId, setSelectedStudentId] = useState(null);
+
   const { url } = useAuth();
+
+  const fetchClasses = async () => {
+    try {
+      const res = await axios.get(`${url}/api/v1/get-class`);
+      if (res.data.success) {
+        setClassList(res.data.data);
+      }
+    } catch (error) {
+      toast.error("Failed to load classes");
+    }
+  };
 
   const fetchStudents = async () => {
     try {
-      const response = await axios.get(`${url}/api/v1/get-students`, {
+      const res = await axios.get(`${url}/api/v1/get-students`, {
         withCredentials: true,
       });
-      if (response.data.success) {
-        setStudentList(response.data.data);
+      if (res.data.success) {
+        setStudentList(res.data.data);
       } else {
-        toast.error(response.data.message || "Failed to fetch students.");
+        toast.error(res.data.message || "Failed to fetch students.");
       }
     } catch (err) {
       toast.error(err.response?.data?.message || "Unexpected fetch error.");
     }
   };
+
+  useEffect(() => {
+    fetchClasses();
+    fetchStudents();
+  }, []);
 
   const handleDelete = async (id) => {
     try {
@@ -53,17 +76,17 @@ function StudentDashboard() {
   const handleUpdate = (student) => {
     setSelectedStudentId(student._id);
     const cleanData = {
-      name: student.name,
-      email: student.email,
-      class: student.class?._id,
-      address: student.address,
-      rollNo: student.rollNo,
-      marks: student.marks,
-      parentName: student.parentName,
-      parentPh: student.parentPh,
+      name: student.name || "",
+      email: student.email || "",
+      classId: student.class?._id || "",
+      address: student.address || "",
+      rollNo: student.rollNo || "",
+      marks: student.marks || "",
+      parentName: student.parentName || "",
+      parentPh: student.parentPh || "",
     };
     setOriginalData(cleanData);
-    setFormData({ ...cleanData, image: null }); // exclude image from originalData
+    setFormData({ ...cleanData, image: null });
   };
 
   const handleFormChange = (e) => {
@@ -78,28 +101,21 @@ function StudentDashboard() {
   const handleFormSubmit = async (e, close) => {
     e.preventDefault();
 
-    const isFormSame = Object.keys(originalData).every(
-      (key) => originalData[key] === formData[key]
-    );
+    const isFormSame =
+      originalData &&
+      Object.keys(originalData).every(
+        (key) => originalData[key] === formData[key]
+      );
 
-    // Only block submission if nothing changed and no new image
     if (!formData.image && isFormSame) {
       toast.info("No updated data found.");
       return;
     }
 
     const form = new FormData();
-    form.append("name", formData.name);
-    form.append("email", formData.email);
-    form.append("class", formData.class);
-    form.append("address", formData.address);
-    form.append("rollNo", formData.rollNo);
-    form.append("marks", formData.marks);
-    form.append("parentName", formData.parentName);
-    form.append("parentPh", formData.parentPh);
-    if (formData.image) {
-      form.append("image", formData.image);
-    }
+    Object.entries(formData).forEach(([key, value]) => {
+      if (value !== null) form.append(key, value);
+    });
 
     try {
       const res = await axios.put(
@@ -122,171 +138,188 @@ function StudentDashboard() {
     }
   };
 
-  useEffect(() => {
-    fetchStudents();
-  }, []);
-
   return (
     <div className="max-w-[90%] mx-auto mt-10 p-5 bg-gray-100 border border-gray-300 rounded-lg shadow overflow-x-auto">
       <h2 className="text-2xl text-center text-blue-600 mb-6 font-semibold">
         Student List
       </h2>
+      <div className="mb-4 flex justify-center">
+        <input
+          type="text"
+          placeholder="Search by name, Roll no, Address..."
+          value={searchItem}
+          onChange={(e) => setSearchItem(e.target.value)}
+          className="px-4 py-2 border bg-blue-300 border-gray-300 rounded-md w-full max-w-xs focus:outline-none focus:ring focus:ring-blue-600 text-center placeholder-gray-600"
+        />
+      </div>
 
       {studentList.length === 0 ? (
-        <p className="text-center text-gray-600 text-base py-4">
-          No students found.
-        </p>
+        <p className="text-center text-gray-600 py-4">No students found.</p>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse mt-5">
+        <div className="w-full overflow-x-auto">
+          <table className="min-w-[1000px] w-full  border-collapse">
             <thead>
               <tr className="bg-[#6A64F1] text-white">
-                <th className="text-left py-3 px-4">Name</th>
-                <th className="text-left py-3 px-4">Roll No</th>
-                <th className="text-left py-3 px-4">Address</th>
-                <th className="text-left py-3 px-4">Marks</th>
-                <th className="text-left py-3 px-4">Class</th>
-                <th className="text-left py-3 px-4">Parent Name</th>
-                <th className="text-left py-3 px-4">Parent Phone</th>
-                <th className="text-left py-3 px-4">Image</th>
-
-                <th className="text-center py-3 px-4">Actions</th>
+                <th className="py-3 px-4 text-left">Name</th>
+                <th className="py-3 px-4 text-left">Roll No</th>
+                <th className="py-3 px-4 text-left">Address</th>
+                <th className="py-3 px-4 text-left">Marks</th>
+                <th className="py-3 px-4 text-left">Class</th>
+                <th className="py-3 px-4 text-left">Parent Name</th>
+                <th className="py-3 px-4 text-left">Parent Phone</th>
+                <th className="py-3 px-4 text-left">Image</th>
+                <th className="py-3 px-4 text-center">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {studentList.map((student) => (
-                <tr key={student._id} className="border-b">
-                  <td className="py-2 px-4">{student.name}</td>
-                  <td className="py-2 px-4">{student.rollNo}</td>
-                  <td className="py-2 px-4">{student.address}</td>
-                  <td className="py-2 px-4">{student.marks}</td>
-                  <td className="py-2 px-4">{student.class?.className}</td>
-                  <td className="py-2 px-4">{student.parentName}</td>
-                  <td className="py-2 px-4">{student.parentPh}</td>
-                  <td className="py-2 px-4">
-                    <img
-                      src={student.imageUrl}
-                      alt={student.name}
-                      className="w-16 h-16 object-cover rounded"
-                    />
-                  </td>
-                  <td className="py-2 px-4 text-center whitespace-nowrap">
-                    <Popup
-                      trigger={
-                        <button
-                          className="p-2 rounded hover:bg-gray-200"
-                          title="Edit"
-                        >
-                          <FaEdit className="text-blue-600 text-lg" />
-                        </button>
-                      }
-                      modal
-                      nested
-                      onOpen={() => handleUpdate(student)}
-                    >
-                      {(close) => (
-                        <div className="bg-white p-6 rounded-lg w-full max-w-md mx-auto">
-                          <h3 className="text-xl font-semibold text-center text-blue-600 mb-4">
-                            Edit Student
-                          </h3>
-                          <form
-                            onSubmit={(e) => handleFormSubmit(e, close)}
-                            className="space-y-4"
+              {studentList
+                .filter((student) => {
+                  const term = searchItem.toLowerCase();
+                  return (
+                    student.name?.toLowerCase().includes(term) ||
+                    student.rollNo?.toLowerCase().includes(term) ||
+                    student.class?.className?.toLowerCase().includes(term) ||
+                    student.parentName?.toLowerCase().includes(term) ||
+                    student.parentPh?.toLowerCase().includes(term) ||
+                    student.address?.toLowerCase().includes(term)
+                  );
+                })
+                .map((student) => (
+                  <tr key={student._id} className="border-b">
+                    <td className="py-2 px-4">{student.name}</td>
+                    <td className="py-2 px-4">{student.rollNo}</td>
+                    <td className="py-2 px-4">{student.address}</td>
+                    <td className="py-2 px-4">{student.marks}</td>
+                    <td className="py-2 px-4">{student.class?.className}</td>
+                    <td className="py-2 px-4">{student.parentName}</td>
+                    <td className="py-2 px-4">{student.parentPh}</td>
+                    <td className="py-2 px-4">
+                      <img
+                        src={student.imageUrl}
+                        alt={student.name}
+                        className="w-16 h-16 object-cover rounded"
+                      />
+                    </td>
+                    <td className="py-2 px-4 text-center">
+                      <Popup
+                        trigger={
+                          <button
+                            className="p-2 hover:bg-gray-200"
+                            title="Edit"
                           >
-                            <input
-                              type="text"
-                              name="name"
-                              value={formData.name}
-                              onChange={handleFormChange}
-                              placeholder="Name"
-                              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-600"
-                            />
-
-                            <input
-                              type="text"
-                              name="rollNo"
-                              value={formData.rollNo}
-                              onChange={handleFormChange}
-                              placeholder="Roll No"
-                              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-600"
-                            />
-                            <input
-                              type="text"
-                              name="address"
-                              value={formData.address}
-                              onChange={handleFormChange}
-                              placeholder="Address"
-                              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-600"
-                            />
-                            <input
-                              type="number"
-                              name="marks"
-                              value={formData.marks}
-                              onChange={handleFormChange}
-                              placeholder="Marks"
-                              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-600"
-                            />
-                            <input
-                              type="text"
-                              name="class"
-                              value={formData.class}
-                              onChange={handleFormChange}
-                              placeholder="Class ID"
-                              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-600"
-                            />
-                            <input
-                              type="text"
-                              name="parentName"
-                              value={formData.parentName}
-                              onChange={handleFormChange}
-                              placeholder="Parent Name"
-                              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-600"
-                            />
-                            <input
-                              type="text"
-                              name="parentPh"
-                              value={formData.parentPh}
-                              onChange={handleFormChange}
-                              placeholder="Parent Phone"
-                              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-600"
-                            />
-                            <input
-                              type="file"
-                              name="image"
-                              accept="image/*"
-                              onChange={handleFormChange}
-                              className="w-full p-2 border border-gray-300 rounded-md"
-                            />
-
-                            <div className="flex justify-between gap-4 pt-2">
-                              <button
-                                type="submit"
-                                className="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+                            <FaEdit className="text-blue-600 text-lg" />
+                          </button>
+                        }
+                        modal
+                        nested
+                        onOpen={() => handleUpdate(student)}
+                      >
+                        {(close) => (
+                          <div className="bg-white p-6  w-full max-w-sm mx-auto max-h-[90vh] overflow-y-auto">
+                            <h3 className="text-xl font-semibold text-center text-blue-600 mb-4">
+                              Edit Student
+                            </h3>
+                            <form
+                              onSubmit={(e) => handleFormSubmit(e, close)}
+                              className="space-y-4"
+                            >
+                              <input
+                                type="text"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleFormChange}
+                                placeholder="Name"
+                                className="w-full p-3 border border-gray-300 rounded-md"
+                              />
+                              <input
+                                type="text"
+                                name="rollNo"
+                                value={formData.rollNo}
+                                onChange={handleFormChange}
+                                placeholder="Roll No"
+                                className="w-full p-3 border border-gray-300 rounded-md"
+                              />
+                              <input
+                                type="text"
+                                name="address"
+                                value={formData.address}
+                                onChange={handleFormChange}
+                                placeholder="Address"
+                                className="w-full p-3 border border-gray-300 rounded-md"
+                              />
+                              <input
+                                type="number"
+                                name="marks"
+                                value={formData.marks}
+                                onChange={handleFormChange}
+                                placeholder="Marks"
+                                className="w-full p-3 border border-gray-300 rounded-md"
+                              />
+                              <select
+                                name="classId"
+                                value={formData.classId}
+                                onChange={handleFormChange}
+                                className="w-full p-3 border border-gray-300 rounded-md"
                               >
-                                Update
-                              </button>
-                              <button
-                                type="button"
-                                onClick={close}
-                                className="flex-1 bg-gray-300 text-gray-800 py-2 rounded hover:bg-gray-400 transition"
-                              >
-                                Cancel
-                              </button>
-                            </div>
-                          </form>
-                        </div>
-                      )}
-                    </Popup>
-                    <button
-                      onClick={() => handleDelete(student._id)}
-                      className="p-2 rounded hover:bg-gray-200 ml-2"
-                      title="Delete"
-                    >
-                      <FaTrash className="text-red-600 text-lg" />
-                    </button>
-                  </td>
-                </tr>
-              ))}
+                                <option value="">Select Class</option>
+                                {classList.map((cls) => (
+                                  <option key={cls._id} value={cls._id}>
+                                    {cls.className}
+                                  </option>
+                                ))}
+                              </select>
+                              <input
+                                type="text"
+                                name="parentName"
+                                value={formData.parentName}
+                                onChange={handleFormChange}
+                                placeholder="Parent Name"
+                                className="w-full p-3 border border-gray-300 rounded-md"
+                              />
+                              <input
+                                type="text"
+                                name="parentPh"
+                                value={formData.parentPh}
+                                onChange={handleFormChange}
+                                placeholder="Parent Phone"
+                                className="w-full p-3 border border-gray-300 rounded-md"
+                              />
+                              <input
+                                type="file"
+                                name="image"
+                                accept="image/*"
+                                onChange={handleFormChange}
+                                className="w-full"
+                              />
+                              <div className="flex gap-4 pt-2">
+                                <button
+                                  type="submit"
+                                  className="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+                                >
+                                  Update
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={close}
+                                  className="flex-1 bg-gray-300 text-gray-800 py-2 rounded hover:bg-gray-400 transition"
+                                >
+                                  Cancel
+                                </button>
+                              </div>
+                            </form>
+                          </div>
+                        )}
+                      </Popup>
+                      <button
+                        onClick={() => handleDelete(student._id)}
+                        className="p-2 rounded hover:bg-gray-200 ml-2"
+                        title="Delete"
+                      >
+                        <FaTrash className="text-red-600 text-lg" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
