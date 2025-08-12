@@ -3,62 +3,14 @@ import AboutSch from "../assets/about_sch.png";
 import ChartComponent from "../dashboard/Chart";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { useAuth } from "../context/appContext";
 
-const teacher = [
-  {
-    name: "Mr. Arjun Singh",
-    subject: "Mathematics",
-    email: "arjun.singh@example.com",
-    phone: "+91 9876543210",
-    experience: 8,
-    photoUrl: "https://i.pravatar.cc/150?img=12",
-  },
-  {
-    name: "Ms. Priya Sharma",
-    subject: "Science",
-    email: "priya.sharma@example.com",
-    phone: "+91 9123456780",
-    experience: 6,
-    photoUrl: "https://i.pravatar.cc/150?img=15",
-  },
-  {
-    name: "Mr. Ramesh Mehta",
-    subject: "History",
-    email: "ramesh.mehta@example.com",
-    phone: "+91 9012345678",
-    experience: 10,
-    photoUrl: "https://i.pravatar.cc/150?img=8",
-  },
-  {
-    name: "Ms. Neha Kapoor",
-    subject: "English",
-    email: "neha.kapoor@example.com",
-    phone: "+91 9988776655",
-    experience: 5,
-    photoUrl: "https://i.pravatar.cc/150?img=20",
-  },
-  {
-    name: "Mr. Anil Verma",
-    subject: "Physics",
-    email: "anil.verma@example.com",
-    phone: "+91 9876501234",
-    experience: 7,
-    photoUrl: "https://i.pravatar.cc/150?img=30",
-  },
-  {
-    name: "Ms. Kavita Desai",
-    subject: "Computer Science",
-    email: "kavita.desai@example.com",
-    phone: "+91 9811223344",
-    experience: 9,
-    photoUrl: "https://i.pravatar.cc/150?img=25",
-  },
-];
 function About() {
   const h1Ref = useRef();
   const pRef = useRef();
   const imgRef = useRef();
   const cardRefs = useRef([]);
+  const { teacherList } = useAuth();
 
   useGSAP(() => {
     gsap.from(h1Ref.current, {
@@ -119,53 +71,54 @@ function About() {
       <div className="flex items-center justify-center">
         <ChartComponent />
       </div>
-      <div className="p-14 flex flex-col gap-16">
-        <h1 className="font-roboto md:font-pacifico font-bold text-yellow-500 text-5xl sm:text-6xl md:text-7xl drop-shadow-lg text-center">
+      <div className="p-6 sm:p-10 md:p-14 flex flex-col gap-12 sm:gap-16">
+        <h1 className="font-roboto md:font-pacifico font-bold text-yellow-500 text-4xl sm:text-5xl md:text-6xl lg:text-7xl drop-shadow-lg text-center">
           Our Teachers
         </h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-          {teacher.map((t, index) => (
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
+          {teacherList.map((t, index) => (
             <div
               key={index}
               ref={(el) => (cardRefs.current[index] = el)}
               onMouseEnter={() =>
                 gsap.to(cardRefs.current[index], {
                   scale: 1.05,
-                  boxShadow: "0px 10px 20px rgba(0,0,0,0.3)",
-                  duration: 1.3,
+                  boxShadow: "0px 12px 24px rgba(0,0,0,0.25)",
+                  duration: 0.5,
                   ease: "power2.out",
                 })
               }
               onMouseLeave={() =>
                 gsap.to(cardRefs.current[index], {
-                  scale: 0.7,
-                  boxShadow: "0px 4px 6px rgba(0,0,0,0.1)",
-                  duration: 1.3,
+                  scale: 1,
+                  boxShadow: "0px 6px 12px rgba(0,0,0,0.15)",
+                  duration: 0.5,
                   ease: "power2.out",
                 })
               }
-              className="bg-[#734af6] border-2 border-[#734af6] rounded-xl shadow-md p-4 transition-all cursor-pointer"
+              className="bg-gradient-to-br from-[#734af6] to-[#5d35d1] border border-[#734af6] rounded-2xl shadow-lg p-6 transition-all cursor-pointer flex flex-col items-center text-center"
             >
-              <div className="flex items-center gap-4">
-                <img
-                  src={t.photoUrl}
-                  alt={t.name}
-                  className="w-16 h-16 md:w-24 md:h-24 rounded-full object-cover border"
-                />
-                <div>
-                  <h2 className="text-lg font-semibold text-white">{t.name}</h2>
-                  <p className="text-sm text-gray-300">{t.subject}</p>
-                </div>
-              </div>
-              <div className="mt-3 text-sm md:text-xl text-white font-roboto">
+              <img
+                src={t.imageUrl}
+                alt={t.name}
+                className="w-20 h-20 object-cover rounded-full border-4 border-white shadow-md mb-4"
+              />
+              <h2 className="text-lg sm:text-xl font-bold text-white">
+                {t.name}
+              </h2>
+              <p className="text-sm text-gray-200 mb-4">{t.subject}</p>
+
+              <div className="text-sm sm:text-base md:text-lg text-white font-roboto leading-relaxed space-y-2">
                 <p>
-                  <strong>Email:</strong> {t.email}
+                  <strong className="text-yellow-300">Email:</strong> {t.email}
                 </p>
                 <p>
-                  <strong>Phone:</strong> {t.phone}
+                  <strong className="text-yellow-300">Phone:</strong> {t.phone}
                 </p>
                 <p>
-                  <strong>Experience:</strong> {t.experience} years
+                  <strong className="text-yellow-300">Experience:</strong>{" "}
+                  {t.experience} years
                 </p>
               </div>
             </div>

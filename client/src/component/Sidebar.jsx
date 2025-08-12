@@ -20,11 +20,19 @@ export const Sidebar = () => {
   // Animate sidebar open
   useEffect(() => {
     if (isSidebarOpen) {
+      // Animate sidebar open
       gsap.fromTo(
         sidebarRef.current,
         { x: "-100%" },
-        { x: "0%", duration: 1, ease: "power2.out" }
+        { x: "0%", duration: 0.5, ease: "power2.out" }
       );
+    } else {
+      // Animate sidebar close
+      gsap.to(sidebarRef.current, {
+        x: "-100%",
+        duration: 0.5,
+        ease: "power2.inOut",
+      });
     }
   }, [isSidebarOpen]);
 
@@ -35,7 +43,7 @@ export const Sidebar = () => {
       duration: 1,
       ease: "power2.inOut",
       onComplete: () => {
-        navigate(path);   // Navigate AFTER animation
+        navigate(path); // Navigate AFTER animation
       },
     });
   };
@@ -46,7 +54,7 @@ export const Sidebar = () => {
       {isSidebarOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-40 z-40 md:hidden"
-          onClick={toggleSidebar}
+          onClick={toggleSidebar} // this will trigger the close animation now
         />
       )}
 

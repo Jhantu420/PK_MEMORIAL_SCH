@@ -10,8 +10,12 @@ export const AppContextProvider = ({ children }) => {
   const navigate = useNavigate();
   const [isAuthenticate, setAuthenticate] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [teacherList, setTeacherList] = useState([]);
+  const [notifications, setNotifications] = useState([]);
+  
+  const [studentList, setStudentList] = useState([]);
 
-  const url = "http://localhost:3000"; //"https://pk-memorial-server.onrender.com"
+  const url = "http://localhost:3000"; 
 
   const checkAuth = useCallback(async () => {
     try {
@@ -27,15 +31,60 @@ export const AppContextProvider = ({ children }) => {
     }
   }, [url]);
 
+  const fetchTeachers = async () => {
+    try {
+      const response = await axios.get(`${url}/api/v1/get-teacher`, {
+        withCredentials: true,
+      });
+      if (response.data.success) {
+        setTeacherList(response.data.data);
+      } else {
+        toast.error(response.data.message || "Failed to fetch teachers.");
+      }
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Unexpected fetch error.");
+    }
+  };
+
+  const fetchStudents = async () => {
+    try {
+      const res = await axios.get(`${url}/api/v1/get-students`, {
+        withCredentials: true,
+      });
+      if (res.data.success) {
+        setStudentList(res.data.data);
+      } else {
+        toast.error(res.data.message || "Failed to fetch students.");
+      }
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Unexpected fetch error.");
+    }
+  };
+  const fetchNotification = async () => {
+    try {
+      const data = await axios.get(`${url}/api/v1/get-in-touch`, {
+        withCredentials: true,
+      });
+      setNotifications(data.data.result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     checkAuth();
+    fetchTeachers();
+    fetchStudents();
+    fetchNotification();
   }, []);
+
   const toggleSidebar = useCallback(() => {
     setIsSidebarOpen((prev) => !prev);
   }, []);
+
   const closeSidebar = () => {
     setIsSidebarOpen(false);
   };
+
   useEffect(() => {
     if (isSidebarOpen) {
       document.body.classList.add("overflow-hidden");
@@ -53,7 +102,6 @@ export const AppContextProvider = ({ children }) => {
       const result = await axios.get(`${url}/api/v1/logout`, {
         withCredentials: true,
       });
-      console.log(result);
       setAuthenticate(false);
       setUser(null); // or [] if you're defaulting to an array
       toast.success("Logged out successfully");
@@ -76,6 +124,12 @@ export const AppContextProvider = ({ children }) => {
         isSidebarOpen,
         toggleSidebar,
         closeSidebar,
+        teacherList,
+        studentList,
+        notifications,
+        fetchNotification,
+        fetchTeachers,
+        fetchStudents
       }}
     >
       {children}

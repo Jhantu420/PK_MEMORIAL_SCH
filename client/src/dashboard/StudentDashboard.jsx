@@ -7,7 +7,6 @@ import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 
 function StudentDashboard() {
-  const [studentList, setStudentList] = useState([]);
   const [classList, setClassList] = useState([]);
   const [selectedStudentId, setSelectedStudentId] = useState(null);
   const [originalData, setOriginalData] = useState(null);
@@ -24,7 +23,7 @@ function StudentDashboard() {
     parentPh: "",
   });
 
-  const { url } = useAuth();
+  const { url, studentList } = useAuth();
 
   const fetchClasses = async () => {
     try {
@@ -37,24 +36,8 @@ function StudentDashboard() {
     }
   };
 
-  const fetchStudents = async () => {
-    try {
-      const res = await axios.get(`${url}/api/v1/get-students`, {
-        withCredentials: true,
-      });
-      if (res.data.success) {
-        setStudentList(res.data.data);
-      } else {
-        toast.error(res.data.message || "Failed to fetch students.");
-      }
-    } catch (err) {
-      toast.error(err.response?.data?.message || "Unexpected fetch error.");
-    }
-  };
-
   useEffect(() => {
     fetchClasses();
-    fetchStudents();
   }, []);
 
   const handleDelete = async (id) => {

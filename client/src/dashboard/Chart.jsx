@@ -1,24 +1,34 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Chart } from "react-google-charts";
+import { useAuth } from "../context/appContext";
 
 function ChartComponent() {
-  const data = [
-    ["Age Group", "Weight"],
-    ["4 years", 16],
-    ["8 years", 25],
-    ["12 years", 40],
-    ["16 years", 55],
-    ["20 years", 70],
-  ];
+  const { studentList } = useAuth();
+
+  // Prepare chart data
+  const chartData = useMemo(() => {
+    if (!studentList || studentList.length === 0) return [["Class", "Students"]];
+
+    const classCount = {};
+
+    studentList.forEach((student) => {
+      const className = student?.class?.className || "Unknown";
+      classCount[className] = (classCount[className] || 0) + 1;
+    });
+
+    // Convert to [["Class", "Students"], ["CLASS I", 5], ["CLASS II", 3], ...]
+    return [["Class", "Students"], ...Object.entries(classCount)];
+  }, [studentList]);
 
   const options = {
-    title: "Average Weight by Age",
+    title: "Students per Class",
     pieHole: 0.3,
     legend: { position: "bottom" },
     chartArea: {
-      width: "100%",
+      width: "90%",
       height: "80%",
     },
+    colors: ["#734af6", "#f39c12", "#27ae60", "#e74c3c", "#3498db", "#9b59b6"], // optional
   };
 
   return (
@@ -28,7 +38,7 @@ function ChartComponent() {
           chartType="PieChart"
           width="100%"
           height="100%"
-          data={data}
+          data={chartData}
           options={options}
         />
       </div>

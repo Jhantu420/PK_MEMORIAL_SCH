@@ -7,7 +7,6 @@ import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 
 function TeacherDashboard() {
-  const [teacherList, setTeacherList] = useState([]);
   const [originalData, setOriginalData] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
@@ -15,25 +14,13 @@ function TeacherDashboard() {
     phone: "",
     address: "",
     qualification: "",
+    experience: "",
+    subject: "",
     image: null,
   });
-  const [selectedTeacherId, setSelectedTeacherId] = useState(null);
-  const { url } = useAuth();
 
-  const fetchTeachers = async () => {
-    try {
-      const response = await axios.get(`${url}/api/v1/get-teacher`, {
-        withCredentials: true,
-      });
-      if (response.data.success) {
-        setTeacherList(response.data.data);
-      } else {
-        toast.error(response.data.message || "Failed to fetch teachers.");
-      }
-    } catch (err) {
-      toast.error(err.response?.data?.message || "Unexpected fetch error.");
-    }
-  };
+  const [selectedTeacherId, setSelectedTeacherId] = useState(null);
+  const { url, teacherList, fetchTeachers } = useAuth();
 
   const handleDelete = async (id) => {
     try {
@@ -59,6 +46,8 @@ function TeacherDashboard() {
       phone: teacher.phone || "",
       address: teacher.address || "",
       qualification: teacher.qualification || "",
+      experience: teacher.experience || "",
+      subject: teacher.subject || "",
       image: null,
     };
     setOriginalData(cleanData);
@@ -225,6 +214,22 @@ function TeacherDashboard() {
                               value={formData.qualification}
                               onChange={handleFormChange}
                               placeholder="Qualification"
+                              className="w-full p-3 border border-gray-300 rounded-md"
+                            />
+                            <input
+                              type="text"
+                              name="experience"
+                              value={formData.experience}
+                              onChange={handleFormChange}
+                              placeholder="Experience"
+                              className="w-full p-3 border border-gray-300 rounded-md"
+                            />
+                            <input
+                              type="text"
+                              name="subject"
+                              value={formData.subject}
+                              onChange={handleFormChange}
+                              placeholder="Subject"
                               className="w-full p-3 border border-gray-300 rounded-md"
                             />
                             <input

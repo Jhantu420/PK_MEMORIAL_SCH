@@ -1,4 +1,5 @@
 import cloudinary from "../config/cloudinary.js";
+import { ApplyClass } from "../models/applyClass.js";
 import { Class } from "../models/classModel.js";
 
 const classController = async (req, res) => {
@@ -144,4 +145,26 @@ const getClass = async (req, res) => {
     return res.status(400).json({ success: false, message: error.message });
   }
 };
-export { classController, updateClass, getClass, deleteClass };
+
+const applyClass = async (req, res) => {
+  try {
+    const { name, ph, className } = req.body;
+
+    if (!name || !ph || !className) {
+      return res.json({ message: "All fields are required" });
+    }
+    const data = new ApplyClass({
+      name,
+      ph,
+      className,
+    });
+    await data.save();
+    return res
+      .status(200)
+      .json({ success: true, message: "We will contact you soon..." });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ success: false, message: error.message });
+  }
+};
+export { classController, updateClass, getClass, deleteClass, applyClass };

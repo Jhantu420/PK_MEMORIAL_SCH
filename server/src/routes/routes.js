@@ -1,8 +1,8 @@
 import express from 'express';
-import { adminLogin, adminRegister, getAdmin, logout } from '../controllers/adminController.js';
+import { adminLogin, adminRegister, deleteMsg, getAdmin, getInTouchController, getInTouchisRead, getMsg, logout } from '../controllers/adminController.js';
 import { verifyUser } from '../middleware/auth.js';
 import { deleteStudent, getStudents, registerStudent, updateStudent } from '../controllers/studentController.js';
-import { classController, deleteClass, getClass, updateClass } from '../controllers/classController.js';
+import { applyClass, classController, deleteClass, getClass, updateClass } from '../controllers/classController.js';
 import upload from '../helper/multer.js';
 import { deleteTeacher, getAllTeachers, registerTeacher, updateTeacher } from '../controllers/teacherController.js';
 
@@ -12,12 +12,18 @@ const router = express.Router();
 router.post('/registerAdmin',adminRegister);
 router.post('/loginAdmin',adminLogin);
 router.get('/getAdmin',verifyUser,getAdmin);
+// get in touch route
+router.post('/get-in-touch',getInTouchController);
+router.post('/get-in-touch-read',verifyUser,getInTouchisRead);
+router.get('/get-in-touch',verifyUser,getMsg);
+router.delete('/get-in-touch/:id',verifyUser,deleteMsg);
 
 //logout route
 router.get('/logout',logout);
 
 // class route
 router.post('/create-class',verifyUser,upload.single("image"),classController);
+router.post('/apply-class',applyClass);
 router.put('/update-class/:id',verifyUser,upload.single("image"),updateClass);
 router.delete('/delete-class/:id',verifyUser,deleteClass);
 router.get('/get-class',getClass);
