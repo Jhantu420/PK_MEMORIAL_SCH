@@ -12,10 +12,10 @@ export const AppContextProvider = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [teacherList, setTeacherList] = useState([]);
   const [notifications, setNotifications] = useState([]);
-  
+  const [galleries, setGalleries] = useState([]);
   const [studentList, setStudentList] = useState([]);
 
-  const url = "http://localhost:3000"; 
+  const url = "http://localhost:3000";
 
   const checkAuth = useCallback(async () => {
     try {
@@ -70,11 +70,20 @@ export const AppContextProvider = ({ children }) => {
       console.log(error);
     }
   };
+  const fetchGalleries = async () => {
+    try {
+      const res = await axios.get(`${url}/api/v1/images`);
+      setGalleries(res.data.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
   useEffect(() => {
     checkAuth();
     fetchTeachers();
     fetchStudents();
     fetchNotification();
+    fetchGalleries()
   }, []);
 
   const toggleSidebar = useCallback(() => {
@@ -129,7 +138,9 @@ export const AppContextProvider = ({ children }) => {
         notifications,
         fetchNotification,
         fetchTeachers,
-        fetchStudents
+        fetchStudents,
+        galleries,
+        fetchGalleries
       }}
     >
       {children}

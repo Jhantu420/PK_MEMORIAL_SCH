@@ -5,6 +5,8 @@ import { deleteStudent, getStudents, registerStudent, updateStudent } from '../c
 import { applyClass, classController, deleteClass, getClass, updateClass } from '../controllers/classController.js';
 import upload from '../helper/multer.js';
 import { deleteTeacher, getAllTeachers, registerTeacher, updateTeacher } from '../controllers/teacherController.js';
+import { deleteImage, getImages, uploadImages } from '../controllers/imageController.js';
+
 
 const router = express.Router();
 
@@ -12,6 +14,7 @@ const router = express.Router();
 router.post('/registerAdmin',adminRegister);
 router.post('/loginAdmin',adminLogin);
 router.get('/getAdmin',verifyUser,getAdmin);
+
 // get in touch route
 router.post('/get-in-touch',getInTouchController);
 router.post('/get-in-touch-read',verifyUser,getInTouchisRead);
@@ -39,4 +42,9 @@ router.post('/register-student',verifyUser,upload.single("image"),registerStuden
 router.put('/update-student/:id',verifyUser,upload.single("image"),updateStudent);
 router.get('/get-students',verifyUser,getStudents);
 router.delete('/delete-student/:id',verifyUser,deleteStudent);
+
+// upload image
+router.post("/upload", upload.array("images"), uploadImages);
+router.delete("/delete/:id", deleteImage);
+router.get("/images", getImages); 
 export default router;

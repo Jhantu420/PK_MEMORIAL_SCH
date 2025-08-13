@@ -15,6 +15,7 @@ export const Sidebar = () => {
     { path: "/dashboard/teacher-dashboard", label: "Teacher Dashboard" },
     { path: "/dashboard/create-class", label: "Create Class" },
     { path: "/dashboard/class-dashboard", label: "Class Dashboard" },
+    { path: "/dashboard/upload-image", label: "Upload Image/Video" },
   ];
 
   // Animate sidebar open

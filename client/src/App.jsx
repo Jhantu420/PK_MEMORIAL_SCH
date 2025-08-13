@@ -19,6 +19,7 @@ import TeacherDashboard from "./dashboard/TeacherDashboard";
 import OurKnowledge2 from "./pages/ourKnowledge2";
 import OurKnowledge3 from "./pages/ourKnowledge3";
 import StudentDashboard from "./dashboard/StudentDashboard";
+import UploadImage from "./dashboard/UploadImage";
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
             <Route path="create-class" element={<CreateClass />} />
             <Route path="class-dashboard" element={<ClassDashboard />} />
             <Route path="teacher-dashboard" element={<TeacherDashboard />} />
+            <Route path="upload-image" element={<UploadImage />} />
           </Route>
         </Route>
 
