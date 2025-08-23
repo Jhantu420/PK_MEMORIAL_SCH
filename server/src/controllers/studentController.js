@@ -166,11 +166,7 @@ export const updateStudent = async (req, res) => {
 // Get All Students
 export const getStudents = async (req, res) => {
   try {
-    if (req.user.role !== "admin") {
-      return res
-        .status(403)
-        .json({ success: false, message: "Only admin can fetch students" });
-    }
+
 
     const students = await Student.find().populate("class");
 

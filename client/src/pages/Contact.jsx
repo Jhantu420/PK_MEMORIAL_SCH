@@ -37,9 +37,9 @@ function Contact() {
       {/* Grid Layout for Earth and Form */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-10   ">
         {/* Earth Scene */}
-        <div className="relative  sm:h-[400px] lg:h-full bg-black overflow-hidden">
-          <EarthScene />
-        </div>
+      <div className="relative h-[250px] sm:h-[400px] lg:h-full bg-black overflow-hidden rounded-b-2xl">
+  <EarthScene />
+</div>
 
         {/* Contact Form Overlay */}
         <div className="relative flex items-center justify-center p-4 sm:p-10">

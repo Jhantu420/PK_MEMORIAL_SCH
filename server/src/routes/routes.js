@@ -6,6 +6,7 @@ import { applyClass, classController, deleteClass, getClass, updateClass } from 
 import upload from '../helper/multer.js';
 import { deleteTeacher, getAllTeachers, registerTeacher, updateTeacher } from '../controllers/teacherController.js';
 import { deleteImage, getImages, uploadImages } from '../controllers/imageController.js';
+import { addVideo, deleteSingleVideo, deleteVideo, getVideos } from '../controllers/videoController.js';
 
 
 const router = express.Router();
@@ -40,11 +41,18 @@ router.get('/get-teacher',getAllTeachers);
 // student route
 router.post('/register-student',verifyUser,upload.single("image"),registerStudent);
 router.put('/update-student/:id',verifyUser,upload.single("image"),updateStudent);
-router.get('/get-students',verifyUser,getStudents);
+router.get('/get-students',getStudents);
 router.delete('/delete-student/:id',verifyUser,deleteStudent);
 
 // upload image
 router.post("/upload", upload.array("images"), uploadImages);
 router.delete("/delete/:id", deleteImage);
 router.get("/images", getImages); 
+
+// upload video
+router.post("/videos", addVideo);
+router.get("/videos", getVideos);
+router.delete("/videos/:id", deleteVideo);
+router.put("/videos/remove-url/:id", deleteSingleVideo);
+
 export default router;

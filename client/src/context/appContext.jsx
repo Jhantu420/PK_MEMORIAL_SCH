@@ -14,6 +14,7 @@ export const AppContextProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
   const [galleries, setGalleries] = useState([]);
   const [studentList, setStudentList] = useState([]);
+    const [videos, setVideos] = useState([]);
 
   const url = "http://localhost:3000";
 
@@ -38,11 +39,9 @@ export const AppContextProvider = ({ children }) => {
       });
       if (response.data.success) {
         setTeacherList(response.data.data);
-      } else {
-        toast.error(response.data.message || "Failed to fetch teachers.");
       }
     } catch (err) {
-      toast.error(err.response?.data?.message || "Unexpected fetch error.");
+      console.log(err);
     }
   };
 
@@ -53,11 +52,9 @@ export const AppContextProvider = ({ children }) => {
       });
       if (res.data.success) {
         setStudentList(res.data.data);
-      } else {
-        toast.error(res.data.message || "Failed to fetch students.");
       }
     } catch (err) {
-      toast.error(err.response?.data?.message || "Unexpected fetch error.");
+      console.log(err);
     }
   };
   const fetchNotification = async () => {
@@ -70,6 +67,7 @@ export const AppContextProvider = ({ children }) => {
       console.log(error);
     }
   };
+
   const fetchGalleries = async () => {
     try {
       const res = await axios.get(`${url}/api/v1/images`);
@@ -78,12 +76,22 @@ export const AppContextProvider = ({ children }) => {
       console.error(err);
     }
   };
+  const fetchVideos = async () => {
+      try {
+        const res = await axios.get(`${url}/api/v1/videos`);
+        setVideos(res.data);
+      } catch (err) {
+        console.error(err);
+        alert("Failed to fetch videos");
+      }
+    };
   useEffect(() => {
     checkAuth();
     fetchTeachers();
     fetchStudents();
     fetchNotification();
-    fetchGalleries()
+    fetchGalleries();
+    fetchVideos();
   }, []);
 
   const toggleSidebar = useCallback(() => {
@@ -140,7 +148,9 @@ export const AppContextProvider = ({ children }) => {
         fetchTeachers,
         fetchStudents,
         galleries,
-        fetchGalleries
+        fetchGalleries,
+        fetchVideos,
+        videos
       }}
     >
       {children}

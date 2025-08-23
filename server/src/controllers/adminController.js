@@ -55,9 +55,9 @@ const adminLogin = async (req, res) => {
     const token = generateToken(adminExist._id, adminExist.role);
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false, // IMPORTANT: Change from false to true
+      secure: false,
       sameSite: "Strict",
-      expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+      expiresIn: 30 * 24 * 60 * 60 * 1000,
     });
 
     return res.status(200).json({ message: "Login Successfull", data: token });
@@ -122,7 +122,7 @@ const getInTouchisRead = async (req, res) => {
   try {
     const [unreadGetInTouch, unreadApplyClass] = await Promise.all([
       getInTouchModel.find({ isRead: false }),
-      ApplyClass.find({ isRead: false })
+      ApplyClass.find({ isRead: false }),
     ]);
 
     if (unreadGetInTouch.length === 0 && unreadApplyClass.length === 0) {
@@ -131,7 +131,7 @@ const getInTouchisRead = async (req, res) => {
 
     await Promise.all([
       getInTouchModel.updateMany({ isRead: false }, { isRead: true }),
-      ApplyClass.updateMany({ isRead: false }, { isRead: true })
+      ApplyClass.updateMany({ isRead: false }, { isRead: true }),
     ]);
 
     res.status(200).json({ message: "Unread notifications marked as read" });
@@ -140,7 +140,6 @@ const getInTouchisRead = async (req, res) => {
     res.status(500).json({ message: "Server error", error });
   }
 };
-
 
 // Fetch from both models
 const getMsg = async (req, res) => {
@@ -185,7 +184,6 @@ const deleteMsg = async (req, res) => {
     return res.status(501).json({ message: error.message, success: false });
   }
 };
-
 
 export {
   adminRegister,

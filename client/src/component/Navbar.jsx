@@ -103,6 +103,13 @@ function Navbar() {
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
     { name: "Classes", path: "/classes" },
+    {
+      name: "Gallery",
+      subLinks: [
+        { name: "Image Gallery", path: "/image-gallery" },
+        { name: "Video Gallery", path: "/video-gallery" },
+      ],
+    },
     { name: "Contact", path: "/contact" },
     ...(isAuthenticate && user?.data?.role === "admin"
       ? [{ name: "Dashboard", path: "/dashboard" }]
@@ -112,10 +119,6 @@ function Navbar() {
       : { name: "Login", path: "/login" },
   ];
 
-  /** -------------------------
-   *  UI State Helpers
-   *  -------------------------
-   */
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const showSidebarToggle =
     user?.data?.role === "admin" && location.pathname.startsWith("/dashboard");
@@ -167,8 +170,33 @@ function Navbar() {
           <nav className="hidden md:block">
             <ul className="flex space-x-8 text-lg font-medium">
               {navLinks.map((item, index) => (
-                <li key={index}>
-                  {item.onClick ? (
+                <li key={index} className="relative group">
+                  {item.subLinks ? (
+                    <>
+                      <span className="relative block py-2 px-4 cursor-pointer group font-pacifico">
+                        {item.name}
+                        <span
+                          className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-yellow-400 
+                         group-hover:w-full group-hover:left-0 
+                         transition-all duration-300 ease-in-out"
+                        />
+                      </span>
+
+                      {/* Dropdown Menu */}
+                      <ul className="absolute left-0 top-full mt-2 bg-white text-black shadow-lg rounded-md opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 min-w-[180px] z-50">
+                        {item.subLinks.map((sub, subIndex) => (
+                          <li key={subIndex}>
+                            <Link
+                              to={sub.path}
+                              className="block px-4 py-2 hover:bg-yellow-400 hover:text-white rounded-md"
+                            >
+                              {sub.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </>
+                  ) : item.onClick ? (
                     <button
                       onClick={item.onClick}
                       className="relative block py-2 px-4 group font-pacifico"
@@ -176,8 +204,8 @@ function Navbar() {
                       {item.name}
                       <span
                         className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-yellow-400 
-                                       group-hover:w-full group-hover:left-0 
-                                       transition-all duration-300 ease-in-out"
+                       group-hover:w-full group-hover:left-0 
+                       transition-all duration-300 ease-in-out"
                       />
                     </button>
                   ) : (
@@ -188,8 +216,8 @@ function Navbar() {
                       {item.name}
                       <span
                         className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-yellow-400 
-                                       group-hover:w-full group-hover:left-0 
-                                       transition-all duration-300 ease-in-out"
+                       group-hover:w-full group-hover:left-0 
+                       transition-all duration-300 ease-in-out"
                       />
                     </Link>
                   )}
@@ -256,7 +284,7 @@ function Navbar() {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden">
-            <button className="text-white" onClick={toggleMenu}>
+            <button className="text-white cursor-pointer" onClick={toggleMenu}>
               {isMenuOpen ? (
                 <svg
                   className="h-8 w-8"
@@ -273,7 +301,7 @@ function Navbar() {
                 </svg>
               ) : (
                 <svg
-                  className="h-8 w-8"
+                  className="h-8 w-8 cursor-pointer"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -316,7 +344,26 @@ function Navbar() {
           <ul className="flex flex-col space-y-8 text-white text-3xl font-semibold">
             {navLinks.map((item, index) => (
               <li key={index} className="relative group">
-                {item.onClick ? (
+                {item.subLinks ? (
+                  <details>
+                    <summary className="cursor-pointer py-2 px-4 group-hover:text-yellow-300">
+                      {item.name}
+                    </summary>
+                    <ul className="pl-6 mt-2 space-y-3 text-2xl">
+                      {item.subLinks.map((sub, subIndex) => (
+                        <li key={subIndex}>
+                          <Link
+                            to={sub.path}
+                            onClick={toggleMenu}
+                            className="block hover:text-yellow-300"
+                          >
+                            {sub.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                ) : item.onClick ? (
                   <button
                     onClick={() => {
                       item.onClick();
@@ -335,7 +382,6 @@ function Navbar() {
                     {item.name}
                   </Link>
                 )}
-                <span className="absolute bottom-0 left-0 w-full h-1 bg-yellow-300 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
               </li>
             ))}
           </ul>

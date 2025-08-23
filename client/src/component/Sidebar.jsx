@@ -4,7 +4,7 @@ import { useAuth } from "../context/appContext";
 import gsap from "gsap";
 
 export const Sidebar = () => {
-  const { isSidebarOpen, toggleSidebar } = useAuth();
+  const { isSidebarOpen, toggleSidebar, logout } = useAuth();
   const sidebarRef = useRef(null);
   const navigate = useNavigate();
 
@@ -15,7 +15,8 @@ export const Sidebar = () => {
     { path: "/dashboard/teacher-dashboard", label: "Teacher Dashboard" },
     { path: "/dashboard/create-class", label: "Create Class" },
     { path: "/dashboard/class-dashboard", label: "Class Dashboard" },
-    { path: "/dashboard/upload-image", label: "Upload Image/Video" },
+    { path: "/dashboard/upload-image", label: "Upload Image" },
+    { path: "/dashboard/upload-video", label: "Upload Video" },
   ];
 
   // Animate sidebar open
@@ -54,7 +55,7 @@ export const Sidebar = () => {
       {/* Backdrop */}
       {isSidebarOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-40 z-40 md:hidden"
+          className="fixed inset-0  bg-opacity-40 z-40 md:hidden"
           onClick={toggleSidebar} // this will trigger the close animation now
         />
       )}
@@ -72,12 +73,20 @@ export const Sidebar = () => {
               <li key={item.path}>
                 <button
                   onClick={() => handleNavigation(item.path)}
-                  className="block w-full text-left px-4 py-3 rounded-md text-white hover:bg-white hover:text-[#734af6] transition-all duration-200 font-medium"
+                  className="block w-full text-left px-4 py-3 rounded-md text-white hover:bg-white hover:text-[#734af6] transition-all duration-200 font-medium cursor-pointer"
                 >
                   {item.label}
                 </button>
               </li>
             ))}
+           <li>
+  <button
+    onClick={logout}
+    className="block w-full text-left px-4 py-3 rounded-md text-white hover:bg-white hover:text-[#734af6] transition-all duration-200 font-medium cursor-pointer"
+  >
+    Logout
+  </button>
+</li>
           </ul>
         </div>
       </div>

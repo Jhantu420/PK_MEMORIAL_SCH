@@ -15,11 +15,11 @@ import DashboardLayout from "./dashboard/DashboardLayout";
 import CreateClass from "./dashboard/CreateClass";
 import ClassDashboard from "./dashboard/ClassDashboard";
 import TeacherDashboard from "./dashboard/TeacherDashboard";
-// import OurKnowledge from "./pages/OurKnowledge";
-import OurKnowledge2 from "./pages/ourKnowledge2";
-import OurKnowledge3 from "./pages/ourKnowledge3";
 import StudentDashboard from "./dashboard/StudentDashboard";
 import UploadImage from "./dashboard/UploadImage";
+import UserGallery from "./pages/UserGallery";
+import UploadVideo from "./dashboard/UploadVideo";
+import VideoGallery from "./pages/VideoGallery";
 
 function App() {
   return (
@@ -31,9 +31,9 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/classes" element={<Classes />} />
         <Route path="/contact" element={<Contact />} />
-        {/* <Route path="/our-knowledge" element={<OurKnowledge />} /> */}
-        <Route path="/our-knowledge2" element={<OurKnowledge2 />} />
-        <Route path="/our-knowledge3" element={<OurKnowledge3 />} />
+        <Route path="/image-gallery" element={<UserGallery />} />
+        <Route path="/video-gallery" element={<VideoGallery />} />
+
 
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<DashboardLayout />}>
@@ -45,6 +45,7 @@ function App() {
             <Route path="class-dashboard" element={<ClassDashboard />} />
             <Route path="teacher-dashboard" element={<TeacherDashboard />} />
             <Route path="upload-image" element={<UploadImage />} />
+            <Route path="upload-video" element={<UploadVideo />} />
           </Route>
         </Route>
 
@@ -54,7 +55,7 @@ function App() {
       </Routes>
       <Footer />
     </>
-  );
+  )
 }
 
 export default App;

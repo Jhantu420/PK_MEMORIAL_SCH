@@ -46,7 +46,7 @@ function DirectorMsg() {
           <p className="mb-4">
             It is with great pride and pleasure that I welcome you to{" "}
             <span className="font-semibold text-[#734af6]">
-              PK Memorial Institute
+              PK Memorial School
             </span>{" "}
             — a place where learning is celebrated, values are honored, and
             futures are shaped.
@@ -81,9 +81,9 @@ function DirectorMsg() {
         {/* Signature */}
         <div className="mt-8">
           <p className="font-bold text-lg">Warm regards,</p>
-          <p className="font-semibold">[Your Name]</p>
+          <p className="font-semibold">Tanmoy Kauri</p>
           <p className="italic text-gray-600">
-            Principal, PK Memorial Institute
+            Principal, PK Memorial School
           </p>
         </div>
       </div>
